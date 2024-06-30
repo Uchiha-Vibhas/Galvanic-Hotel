@@ -51,14 +51,7 @@ const Navbar = () => {
             >
               Home
             </Link>
-            <Link
-              to="/rooms"
-              className={`${
-                isNavbarFixed ? "text-white" : "text-gray-500"
-              } hover:text-white transition duration-300`}
-            >
-              Rooms
-            </Link>
+
             <Link
               to="/about"
               className={`${
