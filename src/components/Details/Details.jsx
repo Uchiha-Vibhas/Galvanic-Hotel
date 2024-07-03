@@ -1,8 +1,7 @@
-// Details.jsx
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Table from "./Table"; // Import Table component
+import Table from "./Table";
+import ManageEntries from "./ManageEntries"; // Import ManageEntries component
 
 const Details = () => {
   const [customers, setCustomers] = useState([]);
@@ -127,6 +126,11 @@ const Details = () => {
           </div>
         </div>
       </main>
+      <div class="flex items-center justify-center min-h-screen bg-gray-900 pt-10 pb-10">
+        <div class="w-full max-w-4xl p-10 bg-white rounded-lg shadow dark:bg-gray-800 dark:border dark:border-gray-700">
+          <ManageEntries />
+        </div>
+      </div>
     </div>
   );
 };
