@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const Form = () => {
-  const [User, setUser] = useState({ username: '', email: '', password: '' });
+  const [User, setUser] = useState({ username: '', password: '' });
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -12,14 +12,20 @@ const Form = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    try {
+
       // Make a POST request to your Spring Boot server
 
-      await axios.post('http://localhost:8080/Galvanic/login',User);
+    const response=await axios.post('http://localhost:8080/Galvanic/login',User);
+      if(response.status==200){
+        console.log("logged in succesfully");
+        const  content=await axios.get("http://localhost:8080/Galvanic/all");
+        console.log(content.data)
+      }
+      else{
+        console.log("logged in failed");
+      }
 
-    } catch (error) {
 
-    }
   };
   return (
     <section className="bg-gray-900 w-full">
@@ -71,6 +77,8 @@ const Form = () => {
                   placeholder="Uchiha Vibhas"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required
+                  value={User.username}
+                  onChange={handleInputChange}
                 />
               </div>
               <div>
@@ -87,6 +95,8 @@ const Form = () => {
                   placeholder="••••••••"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required
+                  value={User.password}
+                  onChange={handleInputChange}
                 />
               </div>
               <div className="flex items-start">
@@ -97,6 +107,7 @@ const Form = () => {
                     type="checkbox"
                     className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
                     required
+
                   />
                 </div>
                 <div className="ml-3 text-sm">
