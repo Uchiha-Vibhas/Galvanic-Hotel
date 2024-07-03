@@ -1,7 +1,7 @@
 import React from "react";
 
 const Form = () => {
-  const [User, setUser] = useState({ username: "", password: "" });
+  const [User, setUser] = useState({ username: "", email: "", password: "" });
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
