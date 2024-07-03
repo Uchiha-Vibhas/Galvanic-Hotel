@@ -24,6 +24,24 @@ const ManageEntries = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleDeleteEntry = async () => {
+    try {
+      const { customerId } = formData;
+
+      if (!customerId) {
+        alert("Please enter a customer ID to delete.");
+        return;
+      }
+
+      const deleteResponse = await axios.post(
+        `http://localhost:8080/Galvanic/customers/delete/${customerId}`
+      );
+      console.log("Delete response:", deleteResponse.data); // Log response for verification
+    } catch (error) {
+      console.error("Error deleting entry:", error);
+    }
+  };
+
   const handleInsertEntry = async () => {
     try {
       const customerData = {
@@ -285,12 +303,42 @@ const ManageEntries = () => {
           </form>
         )}
         {option === "delete" && (
-          <div>
-            {/* Implement delete functionality here if needed */}
-            <p className="text-gray-900 dark:text-white">
-              Delete functionality placeholder
-            </p>
-          </div>
+          <form className="space-y-4 md:space-y-6">
+            <div>
+              <label
+                htmlFor="customerId"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Customer ID
+              </label>
+              <input
+                type="text"
+                name="customerId"
+                id="customerId"
+                placeholder="Enter customer ID"
+                value={formData.customerId}
+                onChange={handleInputChange}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                required
+              />
+            </div>
+            <div className="flex space-x-4 mt-4">
+              <button
+                type="button"
+                onClick={handleDeleteEntry}
+                className="w-full text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-800 shadow-md"
+              >
+                Delete Entry
+              </button>
+              <button
+                type="button"
+                onClick={handleResetEntry}
+                className="w-full text-white bg-gray-600 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-500 dark:hover:bg-gray-600 dark:focus:ring-gray-800 shadow-md"
+              >
+                Reset Entry
+              </button>
+            </div>
+          </form>
         )}
       </div>
     </div>
